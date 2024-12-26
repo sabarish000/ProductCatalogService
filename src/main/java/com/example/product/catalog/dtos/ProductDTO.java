@@ -41,7 +41,7 @@ public class ProductDTO {
                 .build();
     }
 
-    public ProductDTO(Product product) {
+    public ProductDTO(@NotNull Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();

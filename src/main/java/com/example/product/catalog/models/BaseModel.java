@@ -19,6 +19,6 @@ public abstract class BaseModel {
 
     private LocalDateTime lastUpdatedAt;
 
-    private Status status;
+    private Status status; // Soft delete field
 
 }
