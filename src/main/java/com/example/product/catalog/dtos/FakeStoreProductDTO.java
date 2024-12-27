@@ -19,18 +19,18 @@ public class FakeStoreProductDTO {
     private String image;
 
     public Product toProduct() {
-        Category category = this.category == null ? null :
-                Category.builder()
-                        .name(this.category)
-                        .build();
-        return Product.builder()
-                .id(id)
-                .name(title)
-                .price(price)
-                .description(description)
-                .imageUrl(image)
-                .category(category)
-                .build();
+        Product product = new Product();
+        product.setId(id);
+        product.setName(title);
+        product.setPrice(price);
+        product.setDescription(description);
+        product.setImageUrl(image);
+        if(category != null){
+            Category categoryObj = new Category();
+            categoryObj.setName(category);
+                product.setCategory(categoryObj);
+        }
+        return product;
     }
 
     public FakeStoreProductDTO(@NotNull Product product) {

@@ -58,12 +58,6 @@ public class GlobalExceptionHandler {
         ex.getAllErrors().forEach(error -> {
             errors.add(error.getDefaultMessage());
         });
-//        ex.getAllErrors().forEach(violation -> {
-////            String fieldName = violation.;
-//
-//            String errorMessage = violation.;
-//            errors.put(fieldName, errorMessage);
-//        });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 

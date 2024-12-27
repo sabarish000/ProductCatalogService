@@ -26,19 +26,18 @@ public class ProductDTO {
     private CategoryDTO category;
 
     public Product toProduct() {
-        Category category = this.category == null ? null :
-                Category.builder()
-                        .name(this.category.getName())
-                        .id(this.category.getId())
-                        .build();
-        return Product.builder()
-                .id(id)
-                .name(name)
-                .price(price)
-                .description(description)
-                .imageUrl(imageUrl)
-                .category(category)
-                .build();
+        Product product = new Product();
+        product.setId(id);
+        product.setName(name);
+        product.setPrice(price);
+        product.setDescription(description);
+        product.setImageUrl(imageUrl);
+        if(category != null){
+            Category categoryObj = new Category();
+            categoryObj.setName(category.getName());
+            product.setCategory(categoryObj);
+        }
+        return product;
     }
 
     public ProductDTO(@NotNull Product product) {
@@ -47,6 +46,8 @@ public class ProductDTO {
         this.description = product.getDescription();
         this.price = product.getPrice();
         this.imageUrl = product.getImageUrl();
-        this.category = new CategoryDTO(product.getCategory());
+        if(product.getCategory() != null) {
+            this.category = new CategoryDTO(product.getCategory());
+        }
     }
 }
