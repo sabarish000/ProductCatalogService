@@ -19,18 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     @Qualifier("fakeStoreProductService")
     IProductService productService;
 
-    @PostMapping("/products")
+    @PostMapping
     public ResponseEntity<ProductDTO> create(@Valid @NotNull @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<ProductDTO>(new ProductDTO(productService.create(productDTO.toProduct())),
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/products")
+    @GetMapping
     public ResponseEntity<List<ProductDTO>> getProducts(){
         List<Product> products = this.productService.getProducts();
         List<ProductDTO> productDTOS = new ArrayList<>();
@@ -43,7 +44,7 @@ public class ProductController {
     // @PathVariable("id") maps it with the @GetMapping id in the path.
     // @PathVariable Long id name should match variable in the path("products/{id}").
     // otherwise throws MissingPathVariableException (Required path variable 'productId' is not present.)
-    @GetMapping("products/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProduct(@PathVariable("id") Long productId){
         if(productId <= 0) {
              throw new IllegalArgumentException("Product id invalid");
@@ -59,21 +60,21 @@ public class ProductController {
     }
 
     // @RequestBody binds the request body to product variable
-    @PatchMapping("/products/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ProductDTO> updateProduct(@NotNull @PathVariable Long id,@NotNull @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<ProductDTO>(new ProductDTO(productService.update(id, productDTO.toProduct())),
                 HttpStatus.OK);
     }
 
     // @RequestBody binds the request body to product variable
-    @PutMapping("/products/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> replaceProduct(@NotNull @PathVariable Long id, @NotNull @Valid @RequestBody ProductDTO productDTO) {
         return new ResponseEntity<ProductDTO>(new ProductDTO(productService.replace(id, productDTO.toProduct())),
                 HttpStatus.OK);
     }
 
     // @RequestBody binds the request body to product variable
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteProduct(@NotBlank @PathVariable Long id) {
         productService.delete(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
